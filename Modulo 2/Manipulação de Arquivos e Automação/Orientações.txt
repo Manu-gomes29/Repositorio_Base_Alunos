@@ -1,1 +1,15 @@
-Aqui nessa pasta, vocês vão salvar todas as atividades referentes a manipulação de arquivos e automação, pyautogui, biblioteca os, biblioteca csv, json etc
+import pyautogui as gui 
+import time
+import webbrowser
+
+# Espera 2 segundos para o usuário se preparar
+time.sleep(2)
+
+# Abre o site no navegador padrão
+webbrowser.open('https://animefire.plus/animes/tengoku-daimakyou-dublado/12')
+
+# Espera o site carregar
+time.sleep(3)
+
+# (Opcional) Maximiza a janela no Windows
+gui.hotkey('win', 'up')
