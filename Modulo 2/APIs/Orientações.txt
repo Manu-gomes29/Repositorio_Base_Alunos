@@ -1,1 +1,33 @@
-Aqui, vocês vão colocar os códigos sobre APis, o cotação de moedas e pokemon por exemplo
+from flask import Flask, jsonify, request
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+#"Banco de dados"fake (uma lista de dicionários)
+playlist = [
+    {"id": 1, "titulo": "I'm Still In Love With You" , "artista": "Sean Paul" , "link":" https://www.youtube.com/watch?v=AQ4TW5Z8eu0&list=RDAQ4TW5Z8eu0&start_radio=1 "},
+    {"id": 2, "titulo": "Beautiful", "artista": "Snoop Dogg", "link":"https://www.youtube.com/watch?v=_FE194VN6c4&list=RD_FE194VN6c4&start_radio=1"}
+]
+@app.route('/musicas', methods=['GET'])  #ROTA = "ENDEREÇO WHATSAPP"
+def get_musicas():
+    return jsonify({"playlist": playlist, "total": len (playlist)})  # RESPOSTA EM JSON
+
+@app.route("/musicas/<int:id>", methods=["GET"])
+def get_musica (id):
+    for musica in playlist:
+        if musica["id"] == id:
+            return jsonify(musica),200
+    return "",204
+
+@app.route('/musicas', methods=['POST'])
+def  add_musica():
+    nova_musica = request.json
+
+
+    nova_musica["id"] = len(playlist) + 1
+
+    playlist.append(nova_musica)
+    return jsonify({"mensagem": "musica adicionada!", "musica" : nova_musica}), 201 
+
+app.run(host = "0.0.0.0", debug= True)
